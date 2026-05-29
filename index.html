@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XDE130 故障智能诊断系统 V4</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <p class="eyebrow">XDE130 市场故障统计 + 操作与保养手册 · V4 深度分析版</p>
+      <h1>智能故障问答 + 手册依据 + 历史案例匹配</h1>
+      <p class="sub">输入现场故障现象，系统会同时参考历史故障案例和《XDE130 电传动自卸车操作与保养手册》，输出可能原因、检查顺序、解决方案和安全提醒。</p>
+    </div>
+    <div class="hero-card">
+      <span>历史故障记录</span>
+      <strong id="totalCount">0</strong>
+      <small>Excel 故障库</small>
+      <span class="manual-count"><b id="manualCount">0</b> 条手册知识</span>
+    </div>
+  </header>
+
+  <main>
+    <section class="ask-panel">
+      <label for="faultInput">输入故障信息</label>
+      <textarea id="faultInput" rows="4" placeholder="例如：车辆挂挡无反应，仪表报警档位手柄故障；或者：制动压力低报警，踩刹车无力；或者：水温高、防冻液渗漏、发动机黄色报警"></textarea>
+      <div class="ask-actions">
+        <button id="askBtn">V4 智能分析并查询</button>
+        <button id="clearBtn2" class="secondary">清空</button>
+      </div>
+      <div class="tips">
+        <button data-demo="发动机黄色报警，水温高，防冻液渗漏，车辆重载爬坡时温度升高">发动机高温</button>
+        <button data-demo="车辆挂挡无反应，仪表报警档位手柄故障，车辆不走车">挂挡无反应</button>
+        <button data-demo="制动压力低报警，踩刹车无力，驻车制动释放异常">制动压力低</button>
+        <button data-demo="转向蓄能器压力低报警，方向重，发动机启动90秒后报警仍在">转向压力低</button>
+        <button data-demo="液压油管接头漏油，举升慢，液压油位低">液压漏油</button>
+        <button data-demo="左前轮异响，轮边温度高，轴承疑似损坏">轮边轴承</button>
+      </div>
+      <p id="aiHint" class="hint"></p>
+    </section>
+
+    <section id="answerBox" class="answer-box hidden"></section>
+
+    <section class="manual-panel">
+      <div class="section-title">
+        <h2>手册知识库</h2>
+        <p>已把操作、保养、故障机器处理、液压/制动/转向/电气/电传动等重点内容整理为本地知识。</p>
+      </div>
+      <div id="manualTags" class="manual-tags"></div>
+      <div id="manualList" class="manual-list"></div>
+    </section>
+
+    <section class="stats" id="stats"></section>
+
+    <section class="panel">
+      <div class="searchbar">
+        <input id="q" placeholder="普通搜索：报警 / 漏水 / 轴承 / 整机编号 / 地点 / 处理方法..." />
+        <button id="clearBtn">清空筛选</button>
+      </div>
+      <div class="filters">
+        <select id="systemFilter"><option value="">全部故障系统</option></select>
+        <select id="warrantyFilter"><option value="">全部保内/保外</option></select>
+        <select id="locationFilter"><option value="">全部工作地点</option></select>
+        <select id="tagFilter"><option value="">全部常见标签</option></select>
+      </div>
+      <div class="actions">
+        <button id="exportBtn">导出当前结果 CSV</button>
+        <span id="resultInfo"></span>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="panel side">
+        <h2>常见故障 Top 20</h2>
+        <div id="topTags"></div>
+        <h2>故障系统占比</h2>
+        <div id="systemBars"></div>
+      </aside>
+      <section class="results" id="results"></section>
+    </section>
+  </main>
+
+  <template id="cardTpl">
+    <article class="card">
+      <div class="card-head">
+        <div>
+          <span class="badge system"></span>
+          <span class="badge warranty"></span>
+          <span class="badge score"></span>
+        </div>
+        <button class="copyBtn">复制方案</button>
+      </div>
+      <h3 class="fault"></h3>
+      <div class="meta"></div>
+      <div class="solutionBox">
+        <b>处理方法 / 解决方案</b>
+        <p class="solution"></p>
+      </div>
+      <div class="tags"></div>
+    </article>
+  </template>
+
+  <script src="data.js"></script>
+  <script src="manual_knowledge.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
